@@ -1,25 +1,94 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { useEffect, useState } from "react";
+import './App.css'
+export default function App() {
+
+
+	const [response, setresponse] = useState();
+	const [noOfpages, setnoOfpages] = useState(0); //6
+
+	const productsperpage = 10;
+
+	const [currentpage, setcurrentpage] = useState(1);//3
+
+	let arr = [];
+
+	for (let i = 1; i <= noOfpages; i++) {
+		arr.push(i);
+	}
+
+	async function fetchproducts() {
+		const response = await fetch(`https://dummyjson.com/products?limit=${productsperpage}&skip=${currentpage * productsperpage - productsperpage}`);
+		const jsonres = await response.json();
+		console.log(jsonres);
+		setresponse(jsonres);
+		setnoOfpages(jsonres.total / productsperpage); //30/5 = 6
+		console.log(noOfpages)
+	}
+
+
+	//2 => 2-1 * 5 => 5
+	//3 => 3 -1 *5 => 10
+
+	useEffect(() => {
+		fetchproducts();
+	}, [currentpage]);
+
+	function handlePageClick(selectedpage) {
+		setcurrentpage(selectedpage); //1
+		let data = `your are on ${selectedpage} now`;
+		console.log(data)
+	}
+
+	function handlenext(page) {
+		setcurrentpage(page)
+	}
+
+	function handleprev(page) {
+		console.log(page)
+		setcurrentpage(page)
+	}
+
+	//1*5 
+	//2 * 5-5 = 5 , page*5 = 2 *5 = 10
+	//5 ,10
+
+	//Pagination is a design pattern used to divide content into separate pages. It’s a fundamental component of digital product design, particularly important when dealing with large amounts of data or content, like e-commerce sites, blogs, data tables, or any other content-heavy platform.
+	return (
+		<>
+			<div>
+				{response && response?.products && (
+					<div className="product__container">
+						{response.products.map((product, index) => {
+							return (
+								<div key={index} className="single__product">
+									<img src={product.images[0]} alt={product.title} />
+									<div className="product_desc">
+										<span>{product.title}</span>
+										<span>${product.price}</span>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</div>
+
+			<div className="pagination">
+				<button disabled={currentpage === 1 ? true: false} onClick={() => handleprev(currentpage - 1)} className="pagination__element"><span>⬅️</span></button>
+				{arr.length > 0 &&
+					arr.map((selectedpage) => {
+						return (
+							<span key={selectedpage}
+								onClick={() => handlePageClick(selectedpage)}
+								className={selectedpage === currentpage ? 'active' : 'pagination__element'}
+							>
+								{selectedpage}
+							</span>
+						);
+					})}
+				<button disabled={currentpage === 10 ? true: false} onClick={() => handlenext(currentpage + 1)} className="pagination__element" ><span>➡️</span></button>
+			</div>
+		</>
+	);
 }
-
-export default App;

@@ -1,38 +1,71 @@
-.App {
+/* .products__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+} */
+
+.product__container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* gap: 20px; */
+}
+
+.single__product{
+  height: 335px;
+  padding: 35px;
+  
+  border: 1px solid black;
+  border-radius: 5px;
   text-align: center;
+  margin: 10px;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.single__product img{
+  object-fit: cover;
+  width: 100%;
+  height: 95%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.product_desc{
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  padding-top: 10px;
+}
+
+/* .__product {
+  border: 1px solid black;
+  padding: 20px;
+  margin: 20px;
+} */
+
+ .pagination {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  margin: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.pagination__element{
+  color: black;
+  padding: 10px 20px;
+  
+  font: bold;
+  font-weight: 700;
+  border: 1px solid black;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.active{
+  background-color: rgb(220, 220, 220);
+  color: black;
+  padding: 10px 20px;
+  
+  font: bold;
+  font-weight: 700;
+  border: 1px solid black;
+  cursor: pointer;
+  
+} 
