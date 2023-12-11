@@ -26,32 +26,23 @@ export default function App() {
 		console.log(noOfpages)
 	}
 
-
-	//2 => 2-1 * 5 => 5
-	//3 => 3 -1 *5 => 10
-
 	useEffect(() => {
 		fetchproducts();
 	}, [currentpage]);
 
 	function handlePageClick(selectedpage) {
 		setcurrentpage(selectedpage); //1
-		let data = `your are on ${selectedpage} now`;
-		console.log(data)
 	}
 
 	function handlenext(page) {
 		setcurrentpage(page)
+		console.log(currentpage);	
 	}
 
 	function handleprev(page) {
 		console.log(page)
-		setcurrentpage(page)
+		setcurrentpage(page);
 	}
-
-	//1*5 
-	//2 * 5-5 = 5 , page*5 = 2 *5 = 10
-	//5 ,10
 
 	//Pagination is a design pattern used to divide content into separate pages. It’s a fundamental component of digital product design, particularly important when dealing with large amounts of data or content, like e-commerce sites, blogs, data tables, or any other content-heavy platform.
 	return (
@@ -75,7 +66,7 @@ export default function App() {
 			</div>
 
 			<div className="pagination">
-				<button disabled={currentpage === 1 ? true: false} onClick={() => handleprev(currentpage - 1)} className="pagination__element"><span>⬅️</span></button>
+				<button disabled={currentpage === 1} onClick={() => handleprev(currentpage - 1)} className="pagination__element"><span>⬅️</span></button>
 				{arr.length > 0 &&
 					arr.map((selectedpage) => {
 						return (
@@ -87,7 +78,7 @@ export default function App() {
 							</span>
 						);
 					})}
-				<button disabled={currentpage === 10 ? true: false} onClick={() => handlenext(currentpage + 1)} className="pagination__element" ><span>➡️</span></button>
+				<button disabled={currentpage === 10} onClick={() => handlenext(currentpage + 1)} className="pagination__element" ><span>➡️</span></button>
 			</div>
 		</>
 	);
